@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caos</title>
+    <style>
+        * {
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        main {
+            width: 85vw;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Caos (08/10/2024)</h1>
+
+    <p>Estava fuçando na internet e me deparei com dois repositórios interessantes:</p>
+    <ul>
+        <li><a href="https://github.com/joeeliang/3-Body-Problem">3-Body-Problem, por Joe Liang</a></li>
+        <li><a href="https://github.com/blbadger/threebody">3-body-problem, por Benjamin Badger</a></li>
+    </ul>
+
+    <p>
+        O primeiro tem vídeos no instagram falando sobre o que está estudando, basicamente ele procura órbitas periódicas no problema de 3-corpos. 
+    </p>
+    
+    <p>
+        Já o segundo tem um <a target="_blank" href="https://blbadger.github.io/3-body-problem.htm">site</a> que explica melhor as coisas, e foi lá que tirei algumas ideias sobre medição de caos.
+    </p>
+
+    <p>
+        Primeiro, peguei uma órbita periódica já conhecida, a lemniscata. Segundo, olhei para métricas que refletissem alterações sutis nas posições e nos momentos lineares em comparação com órbita original; acabei optando por usar o momento de dilatação. A terceira coisa foi escolher uma forma de gerar condições iniciais perturbadas.
+    </p>
+
+    <p>
+        Escolhi fazer o seguinte: dado um raio, tomei a posição inicial de um dos corpos e fiz um quadrado com esse raio. Esse quadrado foi subdividido em quadradinhos com algum tamanho escolhido. Cada quadradinho representa uma posição inicial perturbada, e bastou então integrar cada condição inicial por um dado período de tempo para poder fazer as comparações. Como as colisões acabavam se tornando inevitáveis, adicionei um amortecedor somente para garantir alguma estabilidade mínima e evitar muitos outliers.
+    </p>
+
+    <div style="display: grid; grid-template-columns: 30% 30% 30%;">
+        <div>
+            <img src="legal.png" style="width: 100%;">
+        </div>
+        <div>
+            <img src="nossa.png" style="width: 100%;">
+        </div>
+        <div>
+            <img src="detalhes.png" style="width: 100%;">
+        </div>
+    </div>
+
+    <p>
+       As imagens acima são com diferentes raios e diferentes tempos. Os testes podem ser vistos com mais detalhes no <a href="caos1.html">Jupyter Notebook</a>.
+    </p>
+
+    <p>
+       A terceira imagem levou cerca de 50 minutos para ficar pronta. O integrador utilizado sempre foi o Verlet, com passo 0.01, e nesse caso foram dados 20 instantes de tempo (nos outros foram 10).
+    </p>
+
+    <p>
+       Eu também tentei usar o Fortran para fazer as simulações mais rapidamente que com o Python, mas outra limitação apareceu: a necessidade de gerar arquivos. Optei por utilizar um grid 200x200 num quadrado unitário com espaços de 0.005, então foram 40 mil simulações. O processo levou cerca de 2 horas para terminar, tendo gerado 20.1 MB de valores iniciais, 9.15 GB das trajetórias das 40 mil simulações, 36.6 MB de dados de métrica e 6.82 MB de imagens. Pelo menos um vídeo legalzinho foi gerado.
+    </p>
+
+    <video style="height: 500px;" controls>
+        <source src="caos.mp4">
+    </video>
+
+    <p>
+        Evidentemente não consegui nada conclusivo. Mas é interessante ver os padrões que se formam e como existe uma região curiosamente mais escura no sentido do segundo quadrante. Talvez tenha algo interessante aí para ser estudado.
+    </p>
+</main>
+</body>
+</html>
